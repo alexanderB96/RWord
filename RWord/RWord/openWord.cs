@@ -17,7 +17,7 @@ namespace RWord
             try
             {
                 Word.Application app = new Word.Application();
-                doc = app.Documents.Add(sourse);
+                doc = app.Documents.Open(sourse, ReadOnly:true);
                 doc.Activate();
                 Word.Bookmarks wBookmarks = doc.Bookmarks;
                 System.Diagnostics.Process.Start(sourse);
