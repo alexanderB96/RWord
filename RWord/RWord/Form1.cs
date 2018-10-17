@@ -15,29 +15,31 @@ namespace RWord
 {
     public partial class Form1 : Form
     {
+        openWord oW = new openWord();
         treeView fe = new treeView();
+       
+
         public Form1()
         {
             InitializeComponent();
-            
             fe.CreateTree(this.Provodnik);
 
         }
 
         private void filepyt_MouseClick(object sender, MouseEventArgs e)
         {
+           
             OpenFileDialog File = new OpenFileDialog();
             File.Title = "Выбереите";
             File.Filter = "doc files 2003| *.doc| docx files 2007 |*.docx";
             if (File.ShowDialog() == DialogResult.OK)
             {
-                filepyt.Text = File.FileName;
+                filepyt.Text = Convert.ToString(File.FileName);
                 filepyt.TextAlign = HorizontalAlignment.Left;
                 filepyt.Enabled = false;
+                oW.oWord(File.FileName);
             }
-
-            openWord oW = new openWord();
-            oW.oWord(filepyt.Text);
+                       
         }
 
         private void Provodnik_AfterSelect(object sender, TreeViewEventArgs e)
@@ -54,6 +56,14 @@ namespace RWord
                 label1.Text = " Путь не определён ";
             }
             
+            if (label1.Text.Contains("doc") | label1.Text.Contains("docx"))
+            {
+               DialogResult result=  MessageBox.Show("Открыть файл?", node.FullPath , MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.OK)
+                {
+                    oW.oWord(label1.Text);
+                }
+            }
 
         }
 
@@ -68,17 +78,8 @@ namespace RWord
 
         private void button1_Click(object sender, EventArgs e) //открытие выбранного файла
         {
-            openWord oW = new openWord();
-            oW.oWord(label1.Text);
+            oW.oWord(filepyt.Text);
         }
 
-        private void Provodnik_Click(object sender, EventArgs e)
-        {
-            // не робит что-то
-            /*if (label1.Text != "*.doc*")
-                 button1.Enabled = false;
-            else
-                button1.Enabled = true;*/
-        }
     }
 }

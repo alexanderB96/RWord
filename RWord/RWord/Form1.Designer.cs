@@ -35,7 +35,6 @@
             this.Provodnik = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -43,9 +42,9 @@
             // filepyt
             // 
             this.filepyt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.filepyt.Location = new System.Drawing.Point(279, 12);
+            this.filepyt.Location = new System.Drawing.Point(501, 486);
             this.filepyt.Name = "filepyt";
-            this.filepyt.Size = new System.Drawing.Size(347, 20);
+            this.filepyt.Size = new System.Drawing.Size(189, 20);
             this.filepyt.TabIndex = 0;
             this.filepyt.Text = "кликните для выбора файла. . .";
             this.filepyt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -66,7 +65,7 @@
             this.Provodnik.TabIndex = 1;
             this.Provodnik.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.Provodnik_BeforeExpand);
             this.Provodnik.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.Provodnik_AfterSelect);
-            this.Provodnik.Click += new System.EventHandler(this.Provodnik_Click);
+           
             // 
             // imageList1
             // 
@@ -86,22 +85,15 @@
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "label1";
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(205, 226);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 95);
-            this.listBox1.TabIndex = 3;
+            this.label1.Visible = false;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(231, 90);
+            this.button1.Location = new System.Drawing.Point(696, 486);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(104, 23);
             this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
+            this.button1.Text = "Открыть файл";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -111,7 +103,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 511);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Provodnik);
             this.Controls.Add(this.filepyt);
@@ -125,15 +116,13 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox filepyt;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         public System.Windows.Forms.TreeView Provodnik;
         public System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.TextBox filepyt;
     }
 }
 
