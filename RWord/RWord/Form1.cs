@@ -58,7 +58,7 @@ namespace RWord
             
             if (label1.Text.Contains("doc") | label1.Text.Contains("docx"))
             {
-               DialogResult result=  MessageBox.Show("Открыть файл?", node.FullPath , MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+               DialogResult result = MessageBox.Show("Открыть файл?", node.FullPath , MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.OK)
                 {
                     oW.oWord(label1.Text);
@@ -81,5 +81,10 @@ namespace RWord
             oW.oWord(filepyt.Text);
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            oW.OpWord(label1.Text, this);
+            
+        }
     }
 }
