@@ -47,8 +47,7 @@ namespace RWord
             try
             {
                 object TM = Type.Missing;
-               // Object filename = file;
-                Object filename = @"E:\\\\Счет пример.docx";
+                Object filename = file;
                 Object confirmConversions = true;                   //При true в случае открытия документа не формата Word будет выводится диалоговое окно конвертирования файла
                 Object readOnly = true;                            //При true документ открывается только для чтения            
                 Object addToRecentFiles = false;                     //При true имя открываемого файла добавляется в список недавно открытых файлов в меню Файл.
@@ -86,16 +85,26 @@ namespace RWord
                 form.label8.Text = String.Format("Лицевой счёт: {0}" , bankAdresat);
                 form.label9.Text = String.Format("Имя получателя: {0}", nameAdresat);
 
-               
+                form.label4.Visible = true;
+                form.label3.Visible = true;
+                form.label5.Visible = true;
+                form.label6.Visible = true;
+                form.label7.Visible = true;
+                form.label8.Visible = true;
+                form.label9.Visible = true;
+
+
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message + "\nВыберите другой файл"
+                    + "\nВозможно искать стоит файлы:\n\"Счёт ######.docx\""
+                    , "Таблица не найдена", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
             worddocument.Close();
             wordapp.Quit(); // Закрываем Ворд
 
-            //  return TextFromTableCellOne;
+           
 
         }
        

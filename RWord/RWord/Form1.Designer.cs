@@ -93,6 +93,7 @@
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "label1";
+            this.label1.Visible = false;
             // 
             // button1
             // 
@@ -122,6 +123,7 @@
             this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 6;
             this.label3.Text = "label3";
+            this.label3.Visible = false;
             // 
             // button2
             // 
@@ -142,6 +144,7 @@
             this.label4.Size = new System.Drawing.Size(35, 13);
             this.label4.TabIndex = 8;
             this.label4.Text = "label4";
+            this.label4.Visible = false;
             // 
             // label5
             // 
@@ -152,6 +155,7 @@
             this.label5.Size = new System.Drawing.Size(35, 13);
             this.label5.TabIndex = 9;
             this.label5.Text = "label5";
+            this.label5.Visible = false;
             // 
             // label6
             // 
@@ -162,6 +166,7 @@
             this.label6.Size = new System.Drawing.Size(35, 13);
             this.label6.TabIndex = 10;
             this.label6.Text = "label6";
+            this.label6.Visible = false;
             // 
             // label7
             // 
@@ -172,6 +177,7 @@
             this.label7.Size = new System.Drawing.Size(35, 13);
             this.label7.TabIndex = 11;
             this.label7.Text = "label7";
+            this.label7.Visible = false;
             // 
             // label8
             // 
@@ -182,6 +188,7 @@
             this.label8.Size = new System.Drawing.Size(35, 13);
             this.label8.TabIndex = 12;
             this.label8.Text = "label8";
+            this.label8.Visible = false;
             // 
             // label9
             // 
@@ -192,6 +199,7 @@
             this.label9.Size = new System.Drawing.Size(35, 13);
             this.label9.TabIndex = 13;
             this.label9.Text = "label9";
+            this.label9.Visible = false;
             // 
             // Form1
             // 
