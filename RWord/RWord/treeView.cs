@@ -113,6 +113,17 @@ namespace RWord
                     parentNode.Nodes.Add(node);
                     
                 }
+                //грузим эксель файлы
+                foreach (FileInfo file in rootDir.GetFiles("*.xls*"))
+                {
+                    TreeNode node = new TreeNode();
+
+                    node.Text = file.Name;
+                    node.ImageIndex = 3;
+                    node.SelectedImageIndex = 3;
+                    parentNode.Nodes.Add(node);
+
+                }
 
 
 

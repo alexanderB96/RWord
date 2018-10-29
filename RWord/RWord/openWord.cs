@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
+using Excel = Microsoft.Office.Interop.Excel;
 
-namespace RWord 
+namespace RWord
 {
-    class openWord 
+    class openWord
     {
         public void oWord(string sourse)
         {
@@ -18,19 +19,19 @@ namespace RWord
             try
             {
                 Word.Application app = new Word.Application();
-                doc = app.Documents.Open(sourse, ReadOnly:true);
+                doc = app.Documents.Open(sourse, ReadOnly: true);
                 doc.Activate();
                 Word.Bookmarks wBookmarks = doc.Bookmarks;
                 System.Diagnostics.Process.Start(sourse);
                 //doc.Close();
             }
-            
+
             catch (Exception ex)
             {
                 MessageBox.Show("Error");
             }
         }
-       
+
         private Word.Application wordapp;
         private Word.Document worddocument;
         private string nameBank;
@@ -40,6 +41,7 @@ namespace RWord
         private string kpp;
         private string nameAdresat;
         private string bankAdresat;
+
 
         public void OpWord(string file, Form1 form)
         {
@@ -72,17 +74,17 @@ namespace RWord
                 bik = worddocument.Range(worddocument.Tables[1].Cell(1, 3).Range.Start, worddocument.Tables[1].Cell(1, 3).Range.End - 1).Text;
                 inn = worddocument.Range(worddocument.Tables[1].Cell(4, 1).Range.Start, worddocument.Tables[1].Cell(4, 1).Range.End - 1).Text;
                 kpp = worddocument.Range(worddocument.Tables[1].Cell(4, 3).Range.Start, worddocument.Tables[1].Cell(4, 3).Range.End - 1).Text;
-                nameAdresat = worddocument.Range(worddocument.Tables[1].Cell(5,1 ).Range.Start, worddocument.Tables[1].Cell(5, 1).Range.End - 1).Text;
+                nameAdresat = worddocument.Range(worddocument.Tables[1].Cell(5, 1).Range.Start, worddocument.Tables[1].Cell(5, 1).Range.End - 1).Text;
                 bankAdresat = worddocument.Range(worddocument.Tables[1].Cell(4, 6).Range.Start, worddocument.Tables[1].Cell(4, 6).Range.End - 1).Text;
                 // и т.д. (данные взяли, далее делаем с ними, что хотим)
 
 
                 form.label4.Text = String.Format("Имя банка: {0}", nameBank);
-                form.label3.Text = String.Format("Лицевой счёт: {0}", bankBook);
+                form.label3.Text = String.Format("Коррекционный счёт: {0}", bankBook);
                 form.label5.Text = String.Format("БИК банка: {0}", bik);
-                form.label6.Text = String.Format(" {0}", inn);
-                form.label7.Text = String.Format(" {0}", kpp);
-                form.label8.Text = String.Format("Лицевой счёт: {0}" , bankAdresat);
+                form.label6.Text = String.Format("{0}", inn);
+                form.label7.Text = String.Format("{0}", kpp);
+                form.label8.Text = String.Format("Расчётный счёт: {0}", bankAdresat);
                 form.label9.Text = String.Format("Имя получателя: {0}", nameAdresat);
 
                 form.label4.Visible = true;
@@ -104,9 +106,32 @@ namespace RWord
             worddocument.Close();
             wordapp.Quit(); // Закрываем Ворд
 
-           
+
 
         }
-       
+
+        public void OpExcel(string file, Form1 form)
+        {
+            Excel.Application ObjExcel = new Excel.Application();
+           // Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(file, 0, true, 5, "", "", Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false, true);
+           Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(file);
+
+            Excel.Worksheet ObjWorkSheet = new Excel.Worksheet();
+            ObjWorkSheet = ObjWorkBook.Sheets[1];
+
+            var numCol = "B10:B13";
+
+            Excel.Range usedColumn = ObjWorkSheet.Range[numCol];
+            
+            Array myvalues = (Array)usedColumn.Cells.Value2;
+            
+            string[] strArray = myvalues.OfType<object>().Select(o => o.ToString()).ToArray();
+            
+            ObjWorkBook.Close();
+            ObjExcel.Quit();
+            
+        }
+
     }
 }
+

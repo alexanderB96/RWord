@@ -56,13 +56,23 @@ namespace RWord
                 label1.Text = " Путь не определён ";
             }
             
-            if (label1.Text.Contains("doc") | label1.Text.Contains("docx"))
+            if (label1.Text.Contains("doc") | label1.Text.Contains("docx") )
             {
                 oW.OpWord(label1.Text, this);
                 DialogResult result = MessageBox.Show("Открыть файл?", node.FullPath , MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.OK)
                 {
                     oW.oWord(label1.Text);
+                }
+            }
+
+            if (label1.Text.Contains("xls") | label1.Text.Contains("xlsx"))
+            {
+                oW.OpExcel(label1.Text, this);
+                DialogResult result = MessageBox.Show("Открыть файл?", node.FullPath, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.OK)
+                {
+                    //oW.OpExcel(label1.Text);
                 }
             }
 
