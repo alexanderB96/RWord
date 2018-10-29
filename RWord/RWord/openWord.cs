@@ -47,6 +47,7 @@ namespace RWord
         Excel.Workbook ObjWorkBook;
         private Excel.Range excelcellsOt;
         private Excel.Range excelcellsDo;
+        
 
         public void OpWord(string file, Form1 form)
         {
@@ -164,10 +165,16 @@ namespace RWord
                 Excel.Range usedColumn = ObjWorkSheet.Range[numCol];
 
                 Array myvalues = (Array)usedColumn.Cells.Value2;
+            // получили массив с датами формата стринг
+                string[] strArrayPol = myvalues.OfType<object>().Select(o => o.ToString()).ToArray();
+            //преобразовали эти даты в привычный вид
+                string[] strArray = strArrayPol.Select(x => DateTime.FromOADate(Convert.ToDouble(x)).ToShortDateString()).ToArray();
 
-                string[] strArray = myvalues.OfType<object>().Select(o => o.ToString()).ToArray();
 
-                
+            for (int i = 0; i < strArray.Length; i++)
+                {
+                 form.listBox1.Items.Add(strArray[i]);
+                }
            }
             catch (Exception e)
             {
