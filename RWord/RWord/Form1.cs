@@ -69,11 +69,11 @@ namespace RWord
             if (label1.Text.Contains("xls") | label1.Text.Contains("xlsx"))
             {
                 oW.OpExcel(label1.Text, this);
-                DialogResult result = MessageBox.Show("Открыть файл?", node.FullPath, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                /*DialogResult result = MessageBox.Show("Открыть файл?", node.FullPath, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.OK)
                 {
                     //oW.OpExcel(label1.Text);
-                }
+                }*/
             }
 
         }
