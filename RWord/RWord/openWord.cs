@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
 
 namespace RWord
 {
@@ -41,7 +42,8 @@ namespace RWord
         private string kpp;
         private string nameAdresat;
         private string bankAdresat;
-
+        private Excel.Range excelcellsOt;
+        private Excel.Range excelcellsDo;
 
         public void OpWord(string file, Form1 form)
         {
@@ -113,20 +115,54 @@ namespace RWord
         public void OpExcel(string file, Form1 form)
         {
             Excel.Application ObjExcel = new Excel.Application();
-           // Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(file, 0, true, 5, "", "", Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false, true);
-           Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(file);
-
             Excel.Worksheet ObjWorkSheet = new Excel.Worksheet();
+
+            //открытие файла
+            Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(file, Type.Missing, true, Type.Missing, "", "", Type.Missing, Type.Missing, Type.Missing,
+                                                                                                   Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                                                                                                                              Type.Missing, Type.Missing);
+
+            
+           //выбор листа 
             ObjWorkSheet = ObjWorkBook.Sheets[1];
 
-            var numCol = "B10:B13";
+            //поиск по слову Дата
+            excelcellsOt = ObjWorkSheet.Cells.Find("Дата", Missing.Value, Missing.Value, Excel.XlLookAt.xlPart, Missing.Value,
+               Excel.XlSearchDirection.xlNext,
+               Missing.Value, Missing.Value, Missing.Value);
 
+            //поиск по слову Итого
+            excelcellsDo = ObjWorkSheet.Cells.Find("Итого", Missing.Value, Missing.Value, Excel.XlLookAt.xlPart, Missing.Value,
+               Excel.XlSearchDirection.xlNext,
+               Missing.Value, Missing.Value, Missing.Value);
+
+            //общее пояснение
+            //AdrOt - ячейка поиска от
+            //AdrDo - ячейка поиска до
+
+            //полученные адреса разделяем
+            string[] AdrOtTmp = excelcellsOt.Address.Split('$');
+            string[] AdrDoTmp = excelcellsDo.Address.Split('$');
+
+            //изменяем номера строк(чтобы не попадали слова Дата и Итого)
+            int AdrOtTmp2 = Convert.ToInt32(Convert.ToInt32(AdrOtTmp[2]) + 1);
+            int AdrDoTmp2 = Convert.ToInt32(Convert.ToInt32(AdrDoTmp[2]) - 1);
+
+            //склеиваем обрадно полученные диапозон без Даты и Итого
+            string AdrOt = Convert.ToString(AdrOtTmp[1] + AdrOtTmp2);
+            string AdrDo = Convert.ToString(AdrDoTmp[1] + AdrDoTmp2);
+
+            //собственно сам диапазон 
+            // var numCol = String.Format("{0}:{1}", excelcellsOt.Address, excelcellsDo.Address); //изначально было так, без бубна с переприсвоением
+            var numCol = String.Format("{0}:{1}", AdrOt, AdrDo); // с бубном так
+
+            //задаем диапазон поиска
             Excel.Range usedColumn = ObjWorkSheet.Range[numCol];
             
             Array myvalues = (Array)usedColumn.Cells.Value2;
-            
+                        
             string[] strArray = myvalues.OfType<object>().Select(o => o.ToString()).ToArray();
-            
+
             ObjWorkBook.Close();
             ObjExcel.Quit();
             
