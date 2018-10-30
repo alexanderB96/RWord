@@ -50,7 +50,6 @@ namespace RWord
                 var pt = node.FullPath;
                 label1.Text = String.Format("{0}", pt);
             }
-
             catch
             {
                 label1.Text = " Путь не определён ";
@@ -58,11 +57,19 @@ namespace RWord
             
             if (label1.Text.Contains("doc") | label1.Text.Contains("docx") )
             {
-                oW.OpWord(label1.Text, this);
-                DialogResult result = MessageBox.Show("Открыть файл?", node.FullPath , MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if (result == DialogResult.OK)
+                if (label1.Text.Contains("договор") | label1.Text.Contains("*договор*"))
                 {
-                    oW.oWord(label1.Text);
+                    listBox1.Items.Clear();
+                    oW.PoiskWordText(label1.Text, this);
+                }
+                else
+                {
+                    oW.OpWord(label1.Text, this);
+                    DialogResult result = MessageBox.Show("Открыть файл?", node.FullPath, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (result == DialogResult.OK)
+                    {
+                        oW.oWord(label1.Text);
+                    }
                 }
             }
 
@@ -70,13 +77,11 @@ namespace RWord
             {
                 listBox1.Items.Clear();
                 oW.OpExcel(label1.Text, this);
-                
-                /*DialogResult result = MessageBox.Show("Открыть файл?", node.FullPath, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if (result == DialogResult.OK)
-                {
-                    //oW.OpExcel(label1.Text);
-                }*/
+               
             }
+
+           
+
 
         }
 
