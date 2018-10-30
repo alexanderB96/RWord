@@ -242,15 +242,17 @@ namespace RWord
                 var left = "и\rОбщество с ограниченной ответственностью ";
                 var right = ",  в";
                 var match = Regex.Match(FullTextWord, left + "(.*)" + right, RegexOptions.IgnoreCase);
-                if (match.Success)
+                string mt = Convert.ToString(match.Groups[1].Value);
+                mt = mt.Replace("Юридический адрес:","");
+                if (mt != null )
                 {
-                    form.listBox1.Items.Add(match.Groups[1].Value);
+                    form.listBox1.Items.Add(mt);
                 }
 
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message + "\nВыберите другой файл", "Таблица не найдена", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(e.Message + "\nВыберите другой файл", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
 
             wordapp.Quit(); // Закрываем Ворд
