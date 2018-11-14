@@ -246,17 +246,29 @@ namespace RWord
                     FullTextWord += (worddocument.Paragraphs[i + 1].Range.Text.ToString());
                 }
                 worddocument.Close();
-                //Поиск фразы по тексту
+
+                //Поиск названия компании
                 var left = "и\rОбщество с ограниченной ответственностью ";
-                var right = ",  в";
+                var right = ",ИНН";
                 var match = Regex.Match(FullTextWord, left + "(.*)" + right, RegexOptions.IgnoreCase);
-                string mt = Convert.ToString(match.Groups[1].Value);
-                //удаляем фразу "Юр.Адрес" из текста
-                mt = mt.Replace("Юридический адрес:","");
-                if (mt != null )
+                string NameCompani = Convert.ToString(match.Groups[1].Value);
+                
+                if (NameCompani != null )
                 {
-                    form.listBox1.Items.Add(mt); //проверяем в лист боксе
+                    form.listBox1.Items.Add(NameCompani); //проверяем в лист боксе
                 }
+                
+                //Поиск юридического адреса компании
+                var left1 = ", Юридический адрес:";
+                var right1 = ",  в";
+                var match1 = Regex.Match(FullTextWord, left1 + "(.*)" + right1, RegexOptions.IgnoreCase);
+                string UrAdres = Convert.ToString(match1.Groups[1].Value);
+               
+                if (UrAdres != null)
+                {
+                    form.listBox1.Items.Add(UrAdres); //проверяем в лист боксе
+                }
+
 
             }
             catch (Exception e)
