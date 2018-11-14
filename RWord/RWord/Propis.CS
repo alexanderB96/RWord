@@ -1,12 +1,19 @@
 using System;
 using System.Collections.Generic;
 
+
+/*
+ * класс для реализации суммы из цифры в пропись 
+ * к нему ещё вернёмся
+ *  
+ */
+
 namespace RWord
 {
     class Propis
     {
         
-        public void Prop(List<int> list,Form1 form)
+        public void Prop(List<int> list,Form1 form) //list передаётся из класса openWord нажатием на кнопку на форме
         {
             foreach (int number in list)
             {
