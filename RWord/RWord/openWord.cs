@@ -9,6 +9,7 @@ using Word = Microsoft.Office.Interop.Word;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace RWord
 {
@@ -29,6 +30,7 @@ namespace RWord
         private Excel.Range excelcellsOt;
         private Excel.Range excelcellsDo;
         private string FullTextWord;
+        public List<int> SumChis = new List<int>();
 
         public void oWord(string sourse)
         {
@@ -125,9 +127,10 @@ namespace RWord
 
         }
 
-        public void OpExcel(string file, Form1 form)
+        public void OpExcel(string file, Form1 form, IEnumerable[] sumStrArrayPol)
         {
-            try
+           
+          try
             {
 
                 //открытие файла
@@ -183,19 +186,22 @@ namespace RWord
 
                 // получили массив с датами формата стринг
                 string[] strArrayPol = myvalues.OfType<object>().Select(o => o.ToString()).ToArray();
-                string[] sumStrArrayPol = summyvalues.OfType<object>().Select(x => x.ToString()).ToArray();
+                sumStrArrayPol =summyvalues.OfType<object>().Select(x => x.ToString()).ToArray();
 
                 //преобразовали эти даты в привычный вид
                 string[] strArray = strArrayPol.Select(x => DateTime.FromOADate(Convert.ToDouble(x)).ToShortDateString()).ToArray();
-                
 
+               
 
                 for (int i = 0; i < strArray.Length; i++)
                 {
                  form.listBox1.Items.Add("Дата: " + strArray[i] + " / " + "Сумма: " + sumStrArrayPol[i]);
+                    SumChis.Add(Convert.ToInt32(Convert.ToDouble(sumStrArrayPol[i])));
                 }
+
                 ObjWorkBook.Close();
-            }
+                
+           }
             catch (Exception e)
             {
                 MessageBox.Show(e.StackTrace, e.Message);
@@ -204,11 +210,13 @@ namespace RWord
             
             ObjExcel.Quit();
             
+           
         }
 
+        
         public void PoiskWordText(string file, Form1 form)
         {
-
+            
             try
             {
                 object TM = Type.Missing;
@@ -232,21 +240,22 @@ namespace RWord
                 wordapp = new Word.Application();                     //Открываем новое приложение Word
                 wordapp.Visible = false;                             //Делаем его невидимым
                 worddocument = wordapp.Documents.Open(ref filename, ref confirmConversions, ref readOnly, ref addToRecentFiles, ref passwordDocument, ref passwordTemplate, ref revert, ref writePasswordDocument, ref writePasswordTemplate, ref format, ref encoding, ref oVisible, ref openConflictDocument, ref documentDirection, ref noEncodingDialog, ref xmlTransform);    //Открываем нужный документ
-                
+                //вытаскивание текста из Word
                 for (int i = 0; i < worddocument.Paragraphs.Count; i++)
                 {
                     FullTextWord += (worddocument.Paragraphs[i + 1].Range.Text.ToString());
                 }
                 worddocument.Close();
-                
+                //Поиск фразы по тексту
                 var left = "и\rОбщество с ограниченной ответственностью ";
                 var right = ",  в";
                 var match = Regex.Match(FullTextWord, left + "(.*)" + right, RegexOptions.IgnoreCase);
                 string mt = Convert.ToString(match.Groups[1].Value);
+                //удаляем фразу "Юр.Адрес" из текста
                 mt = mt.Replace("Юридический адрес:","");
                 if (mt != null )
                 {
-                    form.listBox1.Items.Add(mt);
+                    form.listBox1.Items.Add(mt); //проверяем в лист боксе
                 }
 
             }
@@ -261,6 +270,7 @@ namespace RWord
 
         }
 
+        
     }
 
     #region

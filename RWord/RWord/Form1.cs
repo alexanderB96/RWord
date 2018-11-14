@@ -76,7 +76,7 @@ namespace RWord
             if (label1.Text.Contains("xls") | label1.Text.Contains("xlsx"))
             {
                 listBox1.Items.Clear();
-                oW.OpExcel(label1.Text, this);
+                oW.OpExcel(label1.Text, this, null);
                
             }
 
@@ -103,6 +103,12 @@ namespace RWord
         {
             oW.OpWord(label1.Text, this);
             
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Propis pr = new Propis();
+            pr.Prop(oW.SumChis,this);
         }
     }
 }
